@@ -1,0 +1,28 @@
+{
+  "comment" : "This is bundled JSON file. Idea is that we should externalize this also as part of build. Currently this is going to hold the dev env information",
+  "sessionTimeoutInSeconds": 3600,
+  "org.gooru.nucleus.token.bootstrap.verticles.HttpVerticle": {
+		"instances": 1,
+		"worker": false,
+		"config": {
+			"http.port": 8087,
+			"metrics.periodicity.seconds": 300,
+			"message.bus.send.timeout.seconds": 10,
+			"request.body.size.max.mb": 5
+		}
+	},
+	"org.gooru.nucleus.token.bootstrap.verticles.TokenHandlerVerticle": {
+		"instances": 1,
+		"worker": false,
+		"config": {
+			"redisConfig" : {
+   				"host" : "localhost",
+    			"port" : 6379,
+    			"encoding" : "UTF-8",
+    			"tcpKeepAlive" : true,
+    			"tcpNoDelay" : true
+  			},
+  			"sessionTimeoutInSeconds": 3600
+		}
+	}
+}
