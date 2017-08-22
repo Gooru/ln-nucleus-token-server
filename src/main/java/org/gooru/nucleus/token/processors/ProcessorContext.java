@@ -8,13 +8,13 @@ import io.vertx.redis.RedisClient;
 /**
  * Created by ashish on 4/1/16.
  */
-public class ProcessorContext {
+public final class ProcessorContext {
     private final Vertx vertx;
     private final RedisClient redisClient;
-    private final Message message;
+    private final Message<JsonObject> message;
     private final JsonObject config;
 
-    private ProcessorContext(final Vertx vertx, RedisClient redisClient, final Message message,
+    private ProcessorContext(final Vertx vertx, RedisClient redisClient, final Message<JsonObject> message,
         final JsonObject config) {
         this.vertx = vertx;
         this.redisClient = redisClient;
@@ -22,7 +22,7 @@ public class ProcessorContext {
         this.config = config;
     }
 
-    public static ProcessorContext build(final Vertx vertx, RedisClient redisClient, final Message message,
+    public static ProcessorContext build(final Vertx vertx, RedisClient redisClient, final Message<JsonObject> message,
         final JsonObject config) {
 
         if (vertx == null || redisClient == null || message == null || config == null) {
@@ -39,7 +39,7 @@ public class ProcessorContext {
         return this.redisClient;
     }
 
-    public Message message() {
+    public Message<JsonObject> message() {
         return this.message;
     }
 

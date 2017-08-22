@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.gooru.nucleus.token.routes.utils;
 
 import java.util.ArrayList;

@@ -6,7 +6,7 @@ import io.vertx.core.json.JsonObject;
 /**
  * Created by ashish on 4/1/16.
  */
-public class MessageResponse {
+public final class MessageResponse {
     private final DeliveryOptions deliveryOptions;
     private final JsonObject message;
 
