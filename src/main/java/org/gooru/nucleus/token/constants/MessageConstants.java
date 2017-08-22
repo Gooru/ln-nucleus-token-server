@@ -1,6 +1,6 @@
 package org.gooru.nucleus.token.constants;
 
-public class MessageConstants {
+public final class MessageConstants {
 
     public static final String MSG_HEADER_OP = "mb.operation";
     public static final String MSG_API_VERSION = "api.version";
@@ -14,4 +14,8 @@ public class MessageConstants {
 
     public static final String CONFIG_SESSION_TIMEOUT_KEY = "sessionTimeoutInSeconds";
     public static final String CONFIG_REDIS_CONFIGURATION_KEY = "redisConfig";
+
+    private MessageConstants() {
+        throw new AssertionError("Private constructor");
+    }
 }

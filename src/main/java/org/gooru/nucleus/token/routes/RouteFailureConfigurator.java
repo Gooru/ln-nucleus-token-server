@@ -19,7 +19,7 @@ import io.vertx.ext.web.RoutingContext;
 public class RouteFailureConfigurator implements RouteConfigurator {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteFailureConfigurator.class);
     private static final ResourceBundle MESSAGES = ResourceBundle.getBundle(CommonConstants.RESOURCE_BUNDLE);
-    public static final String CAUGHT_UNREGISTERED_EXCEPTION_WILL_SEND_HTTP_500 =
+    private static final String CAUGHT_UNREGISTERED_EXCEPTION_WILL_SEND_HTTP_500 =
         "Caught unregistered exception, will send HTTP.500";
 
     @Override

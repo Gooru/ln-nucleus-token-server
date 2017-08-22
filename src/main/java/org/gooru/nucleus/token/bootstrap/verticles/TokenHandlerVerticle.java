@@ -32,7 +32,7 @@ public class TokenHandlerVerticle extends AbstractVerticle {
             return;
         }
 
-        eb.consumer(MessagebusEndpoints.MBEP_TOKEN_HANDLER, message -> {
+        eb.<JsonObject>consumer(MessagebusEndpoints.MBEP_TOKEN_HANDLER, message -> {
             ProcessorContext pc = ProcessorContext.build(vertx, redisClient, message, config());
             vertx.executeBlocking(
                 blockingFuture -> MessageProcessorBuilder.buildDefaultProcessor(pc).process(blockingFuture),

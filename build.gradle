@@ -7,7 +7,7 @@
  * user guide available at https://docs.gradle.org/2.7/userguide/tutorial_java_projects.html
  */
 
-import java.lang.invoke.LambdaForm.Compiled;
+import java.lang.invoke.LambdaForm.Compiled
 
 buildscript {
     repositories { jcenter() }

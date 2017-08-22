@@ -29,14 +29,14 @@ class AuthMessageProcessor implements MessageProcessor {
     public void process(Future<Object> future) {
         final DeliveryOptions deliveryOptions = new DeliveryOptions();
         try {
-        Message message = processorContext.message();
+        Message<JsonObject> message = processorContext.message();
         Vertx vertx = processorContext.vertx();
         RedisClient redisClient = processorContext.redisClient();
         JsonObject config = processorContext.config();
 
         String msgOp = message.headers().get(MessageConstants.MSG_HEADER_OP);
         String sessionToken = message.headers().get(MessageConstants.MSG_HEADER_TOKEN);
-        
+
         int sessionTimeout = config.getInteger(MessageConstants.CONFIG_SESSION_TIMEOUT_KEY);
 
         LOGGER.info("Starting processing of token check request in processor for token: '{}", sessionToken);
@@ -80,7 +80,7 @@ class AuthMessageProcessor implements MessageProcessor {
         }
     }
 
-    private void processSuccess(DeliveryOptions deliveryOptions, Future<Object> future, String redisResult) {
+    private static void processSuccess(DeliveryOptions deliveryOptions, Future<Object> future, String redisResult) {
         JsonObject jsonResult;
         jsonResult = new JsonObject(redisResult);
         // If need arises, this is where we shall be doing response
@@ -90,7 +90,7 @@ class AuthMessageProcessor implements MessageProcessor {
         future.complete(response);
     }
 
-    private void renewSessionTokenExpiry(Vertx vertx, RedisClient redisClient, String sessionToken,
+    private static void renewSessionTokenExpiry(Vertx vertx, RedisClient redisClient, String sessionToken,
         int sessionTimeout) {
         redisClient.expire(sessionToken, sessionTimeout, updateHandler -> {
             if (updateHandler.succeeded()) {
@@ -101,7 +101,7 @@ class AuthMessageProcessor implements MessageProcessor {
         });
     }
 
-    private void processFailure(DeliveryOptions deliveryOptions, Future<Object> future) {
+    private static void processFailure(DeliveryOptions deliveryOptions, Future<Object> future) {
         deliveryOptions.addHeader(MessageConstants.MSG_OP_STATUS, MessageConstants.MSG_OP_STATUS_ERROR);
         MessageResponse response = MessageResponse.build(deliveryOptions, new JsonObject());
         future.complete(response);

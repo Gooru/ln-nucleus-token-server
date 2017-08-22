@@ -39,7 +39,7 @@ public class RouteTokenConfigurator implements RouteConfigurator {
 
         router.get(RouteConstants.API_TOKEN_ROUTE).handler(this::verifyAccessToken);
     }
-    
+
     private void verifyAccessToken(RoutingContext routingContext) {
         DeliveryOptions options = DeliveryOptionsBuilder.buildWithApiVersion(routingContext).setSendTimeout(mbusTimeout * 1000)
             .addHeader(MessageConstants.MSG_HEADER_OP, MessageConstants.MSG_OP_ACCESS_TOKEN_DETAILS);
@@ -47,7 +47,7 @@ public class RouteTokenConfigurator implements RouteConfigurator {
         String authorization = request.getHeader(HttpConstants.HEADER_AUTH);
         String token = authorization.substring(HttpConstants.TOKEN.length()).trim();
         options.addHeader(MessageConstants.MSG_HEADER_TOKEN, token);
-        eb.send(MessagebusEndpoints.MBEP_TOKEN_HANDLER, null, options, reply -> {
+        eb.send(MessagebusEndpoints.MBEP_TOKEN_HANDLER, new JsonObject(), options, reply -> {
             if (reply.succeeded()) {
                 LOGGER.info("received response from token server:{}", reply.result().body().toString());
                 AuthResponseContextHolder responseHolder =
@@ -64,7 +64,7 @@ public class RouteTokenConfigurator implements RouteConfigurator {
                         routingContext.response().setStatusCode(HttpConstants.HttpStatus.UNAUTHORIZED.getCode())
                         .setStatusMessage(HttpConstants.HttpStatus.UNAUTHORIZED.getMessage()).end();
                     }
-                    
+
                 } else {
                     routingContext.response().setStatusCode(HttpConstants.HttpStatus.UNAUTHORIZED.getCode())
                         .setStatusMessage(HttpConstants.HttpStatus.UNAUTHORIZED.getMessage()).end();
